@@ -1,4 +1,4 @@
-# Gongpi
+# GongPi
 
 Rings the gong in the Envoy office every time we make a sale.
 
