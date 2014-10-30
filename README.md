@@ -1,3 +1,5 @@
+![gongpi](http://wellsosaur.us/YIA6/Untitled%20Sketch_bb.png)
+
 # GongPi
 
 Rings the gong in the Envoy office every time we make a sale.
