@@ -7,6 +7,7 @@ import json
 import RPi.GPIO as GPIO
 import time
 from threading import Thread
+from time import gmtime, strftime
 
 # Set up LED on GPIO pin 22
 GPIO.setwarnings(False)
@@ -22,9 +23,9 @@ def Blink():
     GPIO.output(22,False)
     time.sleep(0.125)
 
-# Blink the LED 10 times – slooooooowly.
+# Blink the LED 5 times – slowly.
 def BlinkSlow():
-  for i in range(0,10):
+  for i in range(0,5):
     GPIO.output(22,True)
     time.sleep(1)
     GPIO.output(22,False)
@@ -40,12 +41,21 @@ app = web.application(urls, globals())
 class hooks:
   def POST(self):
     data = web.data()
+    ip = web.ctx['ip']
+
+    # Write to the logfile
+    timestamp = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+    f = open('/home/pi/stripe.log','a')
+    f.write('[' + ip + '] ' + timestamp + ': ' + data + '\n')
+    f.close()
 
     try:
-      data_json = json.loads(data)
-
+      stripe_json = json.loads(data)
     except ValueError, e:
       return '200 OK'
+
+    print
+    print '[' + ip + '] ' + stripe_json['type']
 
     if data_json['type'] in ['charge.succeeded']:
       print
