@@ -24,7 +24,7 @@ Rings the gong in the Envoy office every time we make a sale.
 2. Use the `raspi-config` menu to change the default password and set your time zone. **Don't skip this step.**
 3. Once at the command prompt, run `apt get update` and `apt-get upgrade` to update your base system.
 4. Run `apt-get install git`
-5. Clone the repo `git clone git@github.com:OutrageousLabs/gongpi.git`
+5. Clone the repo `git clone git@github.com:envoy/gongpi.git`
 6. `sudo mv rc.local /etc/rc.local` – this overwrites the default rc.local with one that runs the required scripts on boot.
 7. [Install PIGPIO](http://abyz.co.uk/rpi/pigpio/download.html) – this gives us a Python library to easily control the servo.
 8. `easy_install web` and `easy_install simplejson`
