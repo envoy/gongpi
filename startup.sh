@@ -1,8 +1,7 @@
 #!/bin/sh -e
 
 # Ensure that the script has run on boot
-sudo rm -rf /tmp/gonglord_log.txt
-echo "Starting gonglord" > /tmp/gonglord_log.txt
+echo "Starting gonglord on $(date)" > /tmp/gonglord_log.txt
 
 # Print the IP address
 _IP=$(hostname -I) || true
