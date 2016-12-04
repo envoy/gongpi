@@ -21,7 +21,7 @@ fi
 /usr/local/bin/pigpiod &
 
 # Run the webhook listener
-python /home/pi/gonglord/server.py &
+python /home/pi/gonglord/server.py 8081 &
 
 # Run the wifi connection monitor
 sudo /home/pi/gonglord/network-monitor.sh &
