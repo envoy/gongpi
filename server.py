@@ -60,9 +60,17 @@ class hooks:
 
 if __name__ == '__main__':
   try:
+    timestamp = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+    serverlog = open('/home/pi/gonglord/server.log','a')
+    serverlog.write('Server starting: ' + timestamp + '\n')
+    serverlog.close()
     app.run()
 
   except KeyboardInterrupt:
+    timestamp = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+    serverlog = open('/home/pi/gonglord/server.log','a')
+    serverlog.write('Server stopping: ' + timestamp + '\n')
+    serverlog.close()
     print
     print "Exiting..."
     print
