@@ -21,7 +21,7 @@ fi
 /usr/local/bin/pigpiod &
 
 # Run the Stripe webhook listener
-python /home/pi/stripe.py &
+python /home/pi/server.py &
 
 # Run the wifi connection monitor
 sudo /home/pi/network-monitor.sh &

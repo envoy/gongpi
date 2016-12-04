@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 # 2014 Wells Riley
 
 import os
@@ -40,32 +41,20 @@ app = web.application(urls, globals())
 
 class hooks:
   def POST(self):
-    data = web.data()
     ip = web.ctx['ip']
+    timestamp = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+    serverlog = open('/home/pi/server.log','a')
 
     # Write to the logfile
-    timestamp = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-    f = open('/home/pi/stripe.log','a')
-    f.write('[' + ip + '] ' + timestamp + ': ' + data + '\n')
-    f.close()
+    serverlog.write('[' + ip + '] ' + timestamp + '\n')
+    serverlog.close()
 
-    try:
-      stripe_json = json.loads(data)
-    except ValueError, e:
-      return '200 OK'
-
+    # Make some noises
     print
-    print '[' + ip + '] ' + stripe_json['type']
-
-    if data_json['type'] in ['charge.succeeded']:
-      print
-      print 'dolla dolla bills, yo!'
-      print
-      Thread(target=Blink).start()
-      os.system("python /home/pi/gong.py 1")
-
-    else:
-      pass
+    print 'drop da bass'
+    print
+    Thread(target=Blink).start()
+    os.system("python /home/pi/gong.py 1")
 
     return '200 OK'
 

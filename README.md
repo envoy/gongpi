@@ -28,7 +28,7 @@ Rings the gong in the Envoy office every time we make a sale.
 6. `sudo mv rc.local /etc/rc.local` – this overwrites the default rc.local with one that runs the required scripts on boot.
 7. [Install PIGPIO](http://abyz.co.uk/rpi/pigpio/download.html) – this gives us a Python library to easily control the servo.
 8. `easy_install web` and `easy_install simplejson`
-9. Try running `sudo python stripe.py` – it should return the following:
+9. Try running `sudo python server.py` – it should return the following:
 
   ```
   http://0.0.0.0:8080/
@@ -41,7 +41,7 @@ Rings the gong in the Envoy office every time we make a sale.
   curl -d '{"type":"charge.succeeded"}' [PI's IP ADDRESS]:8080
   ```
 
-  The LED should start blinking, and your servo should activate. `stripe.py` will print text in the console, and output an access log to `stripe.log`.
+  The LED should start blinking, and your servo should activate. `server.py` will print text in the console, and output an access log to `server.log`.
 
 10. Restart your Pi `sudo shutdown -r now`
-11. When the Pi reboots, it will automatically start the network monitor (which will auto-reconnect WiFi if disconnected), `pigpiod`, and the `stripe.py` server.
+11. When the Pi reboots, it will automatically start the network monitor (which will auto-reconnect WiFi if disconnected), `pigpiod`, and the `server.py` server.

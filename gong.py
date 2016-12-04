@@ -18,7 +18,7 @@ pigpio
 def init_servo():
 	pigpio.set_PWM_frequency(PIN, 50) # 50Hz pulses
 	pigpio.set_PWM_range(PIN, 20000) # 1,000,000 / 50 = 20,000us for 100% duty cycle
-  	print 'Initializing...'
+  	print 'This is something new... The Casper slide part 2...'
   	move_servo(CENTER)
 
 def move_servo(duty_cycle_us=0):
@@ -39,13 +39,15 @@ def stop_servo():
 
 def gong():
   init_servo()
-  print 'Initialized!'
+  print 'Now it\'s time to get funky...'
   time.sleep(0.1)
 
   spin_servo_ccw_from(CENTER,LEFT)
-  print 'Spinning to left...'
+  print 'To the left...'
   spin_servo_cw_from(LEFT,CENTER)
-  print 'Spinning to right...'
+  print 'Right foot lets stomp...'
+
+  print 'Cha cha real smooth...'
 
 
 gong()
