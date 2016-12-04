@@ -20,10 +20,10 @@ fi
 # Run PIGPIO daemon
 /usr/local/bin/pigpiod &
 
-# Run the Stripe webhook listener
-python /home/pi/server.py &
+# Run the webhook listener
+python /home/pi/gonglord/server.py &
 
 # Run the wifi connection monitor
-sudo /home/pi/network-monitor.sh &
+sudo /home/pi/gonglord/network-monitor.sh &
 
 exit 0
