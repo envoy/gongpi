@@ -46,7 +46,7 @@ class hooks:
     serverlog = open('/home/pi/gonglord/server.log','a')
 
     # Write to the logfile
-    serverlog.write('[' + ip + '] ' + timestamp + '\n')
+    serverlog.write('Received hook from: ' + ip + ' at: ' + timestamp + '\n')
     serverlog.close()
 
     # Make some noises
