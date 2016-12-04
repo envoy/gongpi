@@ -26,7 +26,7 @@ Rings the gong in the Envoy office every time we make a sale.
 4. Run `apt-get install git`
 5. Clone the repo `git clone git@github.com:envoy/gongpi.git`
 6. `sudo mv rc.local /etc/rc.local` – this overwrites the default rc.local with one that runs the required scripts on boot.
-6. Set up a cron on reboot of the raspberry pi - `sudo crontab -e`. Choose nano as your editor and add the line `@reboot /home/pi/gonglord/startup.sh`. This will instruct the raspberry pi to run gonglord upon boot. Add the line `*/5 *   * * *   root    /home/pi/gonglord/startup.sh` to restart the script every 5 mins. Write out (ctrl + O) and ensure that the cron has written: `sudo crontab -l`.
+6. Set up a cron on reboot of the raspberry pi - `sudo crontab -e`. Choose nano as your editor and add the line `@reboot /home/pi/gonglord/startup.sh`. This will instruct the raspberry pi to run gonglord upon boot. Add the line `chmod +x /home/pi/gonglord/startup.sh` to ensure the script is executable. Write out (ctrl + O) and ensure that the cron has written: `sudo crontab -l`.
 7. [Install PIGPIO](http://abyz.co.uk/rpi/pigpio/download.html) – this gives us a Python library to easily control the servo.
 8. `easy_install web.py` and `easy_install simplejson`
 9. Try running `sudo python server.py` – it should return the following:
