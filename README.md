@@ -27,7 +27,7 @@ Rings the gong in the Envoy office every time we make a sale.
 5. Clone the repo `git clone git@github.com:envoy/gongpi.git`
 6. `sudo mv rc.local /etc/rc.local` – this overwrites the default rc.local with one that runs the required scripts on boot.
 7. [Install PIGPIO](http://abyz.co.uk/rpi/pigpio/download.html) – this gives us a Python library to easily control the servo.
-8. `easy_install web` and `easy_install simplejson`
+8. `easy_install web.py` and `easy_install simplejson`
 9. Try running `sudo python server.py` – it should return the following:
 
   ```

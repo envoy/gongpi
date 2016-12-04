@@ -43,7 +43,7 @@ class hooks:
   def POST(self):
     ip = web.ctx['ip']
     timestamp = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-    serverlog = open('/home/pi/server.log','a')
+    serverlog = open('/home/pi/gonglord/server.log','a')
 
     # Write to the logfile
     serverlog.write('[' + ip + '] ' + timestamp + '\n')
@@ -54,7 +54,7 @@ class hooks:
     print 'drop da bass'
     print
     Thread(target=Blink).start()
-    os.system("python /home/pi/gong.py 1")
+    os.system("python /home/pi/gonglord/gong.py 1")
 
     return '200 OK'
 
