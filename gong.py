@@ -5,7 +5,7 @@ import pigpio
 import time
 import thread
 
-PIN = 4
+PIN = 17
 LEFT = 500
 RIGHT = 2500
 CENTER = LEFT + ((RIGHT - LEFT)/2)

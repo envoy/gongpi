@@ -10,31 +10,6 @@ import time
 from threading import Thread
 from time import gmtime, strftime
 
-# Set up LED on GPIO pin 22
-GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(22, GPIO.OUT)
-GPIO.output(22,False)
-
-# Blink the LED 10 times
-def Blink():
-  for i in range(0,20):
-    GPIO.output(22,True)
-    time.sleep(0.125)
-    GPIO.output(22,False)
-    time.sleep(0.125)
-
-# Blink the LED 5 times – slowly.
-def BlinkSlow():
-  for i in range(0,5):
-    GPIO.output(22,True)
-    time.sleep(1)
-    GPIO.output(22,False)
-    time.sleep(1)
-
-# Blink to indicate the server is listening
-Thread(target=BlinkSlow).start()
-
 # Catch the webhook
 urls = ('/.*', 'hooks')
 app = web.application(urls, globals())
@@ -53,7 +28,6 @@ class hooks:
     print
     print 'drop da bass'
     print
-    Thread(target=Blink).start()
     os.system("python /home/pi/gonglord/gong.py 1")
 
     return '200 OK'
