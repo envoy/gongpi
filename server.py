@@ -4,36 +4,65 @@
 
 import os
 import web
-import json
 import RPi.GPIO as GPIO
+import pigpio
 import time
-from threading import Thread
-from time import gmtime, strftime
+import thread
 
-# Catch the webhook
 urls = ('/.*', 'hooks')
 app = web.application(urls, globals())
 
+PIN = 17
+LEFT = 500
+RIGHT = 2500
+CENTER = LEFT + ((RIGHT - LEFT)/2)
+STEP = 100
+SLEEP = 0.01
+
+pigpio_instance = pigpio.pi()
+
+def start_servo():
+  pigpio_instance.set_PWM_frequency(PIN, 50) # 50Hz pulses
+  pigpio_instance.set_PWM_range(PIN, 20000) # 1,000,000 / 50 = 20,000us for 100% duty cycle
+  move_servo(CENTER)
+
+def stop_servo():
+  move_servo(CENTER)
+  pigpio_instance.set_servo_pulsewidth(PIN, 0)
+
+def move_servo(duty_cycle_us=0):
+  pigpio_instance.set_servo_pulsewidth(PIN, duty_cycle_us)
+  time.sleep(SLEEP)
+
+def spin_servo_cw_from(start, end):
+  for duty_cycle_us in range(start, end + STEP, STEP):
+    move_servo(duty_cycle_us)
+
+def spin_servo_ccw_from(start, end):
+  for duty_cycle_us in range(start, end-STEP, -STEP):
+    move_servo(duty_cycle_us)
+
+def gong():
+  time.sleep(0.1)
+  spin_servo_ccw_from(CENTER,LEFT)
+  spin_servo_cw_from(LEFT,CENTER)
+
+def do_gong():
+  start_servo()
+  gong()
+  stop_servo()
+
 class hooks:
   def POST(self):
-    ip = web.ctx['ip']
-
-    # Write to the logfile
-    timestamp = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-    serverlog = open('/home/pi/gonglord/server.log','a')
-    serverlog.write('Received hook from: ' + ip + ' at: ' + timestamp + '\n')
-    serverlog.close()
-
-    # Make some noises
-    os.system("python /home/pi/gonglord/gong.py 1")
-
+    do_gong()
     return '200 OK'
 
 if __name__ == '__main__':
   try:
     app.run()
+    do_gong()
 
   except KeyboardInterrupt:
     GPIO.cleanup()
-    pigpio.stop()
+    pigpio_instance.stop()
     app.stop()
