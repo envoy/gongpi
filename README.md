@@ -50,6 +50,40 @@ Hits a gong when a pull request is accepted.
 
 ## To connect external webhooks
 
-1. Configure your raspberry pi to have a static ip address (info on how to do this can be found online)
-2. Set up your router to port forward port 80 to port 8080 if your raspberry pi. Note that some ISPs do not allow port forwarding from port 80, so you may have to play around with port configurations that work.
-3. Set up a POST webhook to your raspberry pi's static IP address. If all is well, you should see a new entry in `server.log`.
+Note, for this to work you will need to be a paid ngrok user.
+
+1. Download ngrok: `cd ~ && sudo wget https://dl.ngrok.com/ngrok_2.0.19_linux_arm.zip`
+2. Install ngrok: `unzip ngrok_2.0.19_linux_arm.zip`
+3. Configure ngrok to start when a network connection is established:
+
+  ```bash
+    nano /etc/network/if-up.d/upstart
+  ```
+
+  Add the lines
+
+  ```bash
+    /home/pi/ngrok http -subdomain="[YOUR_SUBDOMAIN_HERE]" 8080
+    echo "Starting ngrok on $(date)" > /tmp/ngrok_log.txt
+  ```
+
+  Just below `all_interfaces_up()`. Your completed `all_interfaces_up()` method should look like this:
+
+  ```bash
+    all_interfaces_up() {
+      /home/pi/ngrok http -subdomain="[YOUR_SUBDOMAIN_HERE]" 8080
+      echo "Starting ngrok on $(date)" > /tmp/ngrok_log.txt
+      # return true if all interfaces listed in /etc/network/interfaces as 'auto'
+      # are up.  if no interfaces are found there, then "all [given] were up"
+      local prefix="$1" iface=""
+      for iface in $(get_auto_interfaces); do
+        # if cur interface does is not up, then all have not been brought up
+        [ -f "${prefix}${iface}" ] || return 1
+      done
+      return 0
+    }
+  ```
+
+  Note that you may want to pass the `-subdomain` flag to your `ngrok` script if you are a paid `ngrok` user. This will make your webhooks reliable if `ngrok` restarts after a network outage, or power failure etc...
+
+  Write out and reboot, `ngrok` should start.
