@@ -57,20 +57,20 @@ Note, for this to work you will need to be a paid ngrok user.
 3. Configure pagekite to start when a network connection is established:
 
   ```bash
-    nano /etc/network/if-up.d/upstart
+    sudo nano /etc/network/if-up.d/upstart
   ```
 
   Add the lines
 
   ```bash
-    pagekite.py 8080 [your_unique_name].pagekite.me
+    sudo pagekite.py 8080 [your_unique_name].pagekite.me
   ```
 
   Just below `all_interfaces_up()`. Your completed `all_interfaces_up()` method should look like this:
 
   ```bash
     all_interfaces_up() {
-      pagekite.py 8080 [your_unique_name].pagekite.me
+      sudo pagekite.py 8080 [your_unique_name].pagekite.me
       echo "Starting ngrok on $(date)" > /tmp/ngrok_log.txt
       # return true if all interfaces listed in /etc/network/interfaces as 'auto'
       # are up.  if no interfaces are found there, then "all [given] were up"
