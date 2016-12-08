@@ -27,7 +27,7 @@ Hits a gong when a pull request is accepted.
 3. Once at the command prompt, run `apt get update` and `apt-get upgrade` to update your base system.
 4. Run `apt-get install git`
 5. Clone the repo `git clone git@github.com:envoy/gongpi.git`
-6. Set up a cron on reboot of the raspberry pi - `sudo crontab -e`. Choose nano as your editor and add the line `@reboot /home/pi/gonglord/startup.sh`. This will instruct the raspberry pi to run gonglord when it powers up. Add the line `chmod +x /home/pi/gonglord/startup.sh` to ensure the script is executable. Write out (ctrl + O) and ensure that the cron has been written: `sudo crontab -l`.
+6. Set up a cron on reboot of the raspberry pi - `sudo crontab -e`. Choose nano as your editor and add the line `@reboot /home/pi/gonglord/startup.sh`. This will instruct the raspberry pi to run gonglord when it powers up. Add the line `sudo chmod -R 0777 /home/pi/gonglord` to ensure the script is executable. Write out (ctrl + O) and ensure that the cron has been written: `sudo crontab -l`.
 7. [Install PIGPIO](http://abyz.co.uk/rpi/pigpio/download.html) – this gives us a Python library to easily control the servo.
 8. Install `server.py`'s dependencies: `easy_install web.py` and `easy_install simplejson`
 9. Try running `sudo python server.py` – it should return the following:
@@ -53,38 +53,8 @@ Hits a gong when a pull request is accepted.
 Note, for this to work you will need to be a paid ngrok user.
 
 1. Download pagekite: `cd ~ && curl -s https://pagekite.net/pk/ |sudo bash` - follow the instructions to register with pagekite
-2. Install pagekite: `pagekite.py 8080 [your_unique_name].pagekite.me`
-3. Configure pagekite to start when a network connection is established:
-
-  ```bash
-    sudo nano /etc/network/if-up.d/upstart
-  ```
-
-  Add the lines
-
-  ```bash
-    sudo pagekite.py 8080 [your_unique_name].pagekite.me
-  ```
-
-  Just below `all_interfaces_up()`. Your completed `all_interfaces_up()` method should look like this:
-
-  ```bash
-    all_interfaces_up() {
-      sudo pagekite.py 8080 [your_unique_name].pagekite.me
-      echo "Starting ngrok on $(date)" > /tmp/ngrok_log.txt
-      # return true if all interfaces listed in /etc/network/interfaces as 'auto'
-      # are up.  if no interfaces are found there, then "all [given] were up"
-      local prefix="$1" iface=""
-      for iface in $(get_auto_interfaces); do
-        # if cur interface does is not up, then all have not been brought up
-        [ -f "${prefix}${iface}" ] || return 1
-      done
-      return 0
-    }
-  ```
-
-  Write out and reboot, `pagekite` should start.
-
+2. Install pagekite: `sudo apt-get install pagekite && sudo pagekite.py 8080 [your_unique_name].pagekite.me`
+3. Edit `startup.sh` in this repository to use your own unique pagekite subdomain
 4. Test it out!
   ```bash
     curl -d 'hello' https://[your_unique_name].pagekite.me/
