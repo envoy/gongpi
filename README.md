@@ -2,7 +2,7 @@
 
 # Gonglord
 
-Hits a gong when a pull request is accepted.
+Hits a gong when pushing to master.
 
 ## Requirements
 
