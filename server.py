@@ -4,20 +4,21 @@
 
 import os
 import web
+import json
 import RPi.GPIO as GPIO
 import pigpio
 import time
-import thread
 
 urls = ('/.*', 'hooks')
 app = web.application(urls, globals())
 
 PIN = 17
-LEFT = 500
+# LEFT = 500
+LEFT = 0
 RIGHT = 2500
 CENTER = LEFT + ((RIGHT - LEFT)/2)
 STEP = 100
-SLEEP = 0.01
+SLEEP = 0.05
 
 pigpio_instance = pigpio.pi()
 
@@ -54,7 +55,18 @@ def do_gong():
 
 class hooks:
   def POST(self):
-    do_gong()
+    data = web.data()
+
+    try:
+      json_payload = json.loads(data)
+    except ValueError, e:
+      return '200 OK'
+
+    if data_json['ref'] in ['refs/head/master']:
+      do_gong()
+    else:
+      pass
+
     return '200 OK'
 
 if __name__ == '__main__':
