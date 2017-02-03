@@ -61,7 +61,7 @@ class hooks:
     except ValueError, e:
       return '200 OK'
 
-    if json_payload['ref'] in ['refs/head/master']:
+    if json_payload['ref'] in ['refs/heads/master']:
       do_gong()
     else:
       pass
