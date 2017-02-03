@@ -13,8 +13,7 @@ urls = ('/.*', 'hooks')
 app = web.application(urls, globals())
 
 PIN = 17
-# LEFT = 500
-LEFT = 0
+LEFT = 500
 RIGHT = 2500
 CENTER = LEFT + ((RIGHT - LEFT)/2)
 STEP = 100
