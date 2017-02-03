@@ -17,7 +17,7 @@ LEFT = 500
 RIGHT = 2500
 CENTER = LEFT + ((RIGHT - LEFT)/2)
 STEP = 100
-SLEEP = 0.05
+SLEEP = 0.02
 
 pigpio_instance = pigpio.pi()
 
