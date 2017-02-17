@@ -14,7 +14,7 @@ app = web.application(urls, globals())
 
 PIN = 17
 LEFT = 500
-RIGHT = 2500
+RIGHT = 2700
 CENTER = LEFT + ((RIGHT - LEFT)/2)
 STEP = 100
 SLEEP = 0.02
@@ -52,6 +52,9 @@ def do_gong():
   gong()
   stop_servo()
 
+def is_merged_to_master(json_payload):
+  return json_payload['action'] == 'closed' and json_payload['pull_request']['merged'] and json_payload['pull_request']['base']['ref'] == 'master'
+
 class hooks:
   def POST(self):
     data = web.data()
@@ -61,7 +64,7 @@ class hooks:
     except ValueError, e:
       return '200 OK'
 
-    if json_payload['ref'] in ['refs/heads/master']:
+    if is_merged_to_master(json_payload):
       do_gong()
     else:
       pass
