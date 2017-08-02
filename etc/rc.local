@@ -11,19 +11,7 @@
 #
 # By default this script does nothing.
 
-# Print the IP address
-_IP=$(hostname -I) || true
-if [ "$_IP" ]; then
-  printf "My IP address is %s\n" "$_IP"
-fi
-
-# Run PIGPIO daemon
-/usr/local/bin/pigpiod &
-
-# Run the Stripe webhook listener
-python /home/pi/stripe.py &
-
-# Run the wifi connection monitor
-sudo /home/pi/network-monitor.sh &
+# Run the webhook listener
+python /home/pi/gongpi/server.py &
 
 exit 0

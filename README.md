@@ -1,17 +1,13 @@
-![gongpi](http://wellsosaur.us/YIA6/Untitled%20Sketch_bb.png)
-
 # GongPi
 
-Rings the gong in the Envoy office every time we make a sale.
-
-[DEMO](http://wellsosaur.us/YFfX)
+Rings the gong in the office every time we make a sale.
 
 ## Requirements
 
 * RPi GPIO library
-* [PIGPIO](http://abyz.co.uk/rpi/pigpio/) library
+* PIGPIO library
 * Web.py
-* Raspberry Pi (we used Adafruit Raspberry Pi Rev. B+)
+* Raspberry Pi
 * Internet connection (wired or wireless)
 * Servo on GPIO pin 4
 * One LED on GPIO pin 22
@@ -20,15 +16,15 @@ Rings the gong in the Envoy office every time we make a sale.
 
 **Note: These are *very* loose instructions to help get you started. This guide won't cover the basics of electronic wiring, Raspbian (the Raspberry Pi flavored Linux distro), and setting up a server to send webhooks from.**
 
-1. Install [Raspbian Wheezy](http://www.raspberrypi.org/help/noobs-setup/) – I recommend using NOOBS (linked) because it's easier.
+1. Install [Raspbian](http://www.raspberrypi.org/).
 2. Use the `raspi-config` menu to change the default password and set your time zone. **Don't skip this step.**
-3. Once at the command prompt, run `apt get update` and `apt-get upgrade` to update your base system.
-4. Run `apt-get install git`
-5. Clone the repo `git clone git@github.com:envoy/gongpi.git`
-6. `sudo mv rc.local /etc/rc.local` – this overwrites the default rc.local with one that runs the required scripts on boot.
-7. [Install PIGPIO](http://abyz.co.uk/rpi/pigpio/download.html) – this gives us a Python library to easily control the servo.
+3. Once at the command prompt, run `sudo apt get update` and `sudo apt-get upgrade -y` to update your base system.
+4. Run `apt-get install -y git python-pip`.
+5. Clone the repo `git clone https://github.com/jramos/gongpi.git`.
+6. `cd gongpi; sudo mv etc/rc.local /etc/rc.local; sudo chmod +x /etc/rc.local` – this overwrites the default rc.local with one that runs the required scripts on boot.
+7. `pip install -r requirements.txt`.
 8. `easy_install web` and `easy_install simplejson`
-9. Try running `sudo python stripe.py` – it should return the following:
+9. Try running `sudo python server.py` – it should return the following:
 
   ```
   http://0.0.0.0:8080/
@@ -41,7 +37,7 @@ Rings the gong in the Envoy office every time we make a sale.
   curl -d '{"type":"charge.succeeded"}' [PI's IP ADDRESS]:8080
   ```
 
-  The LED should start blinking, and your servo should activate. `stripe.py` will print text in the console, and output an access log to `stripe.log`.
+  The LED should start blinking, and your servo should activate. `server.py` will print text in the console, and output an access log to `server.log`.
 
 10. Restart your Pi `sudo shutdown -r now`
-11. When the Pi reboots, it will automatically start the network monitor (which will auto-reconnect WiFi if disconnected), `pigpiod`, and the `stripe.py` server.
+11. When the Pi reboots, it will automatically start the network monitor (which will auto-reconnect WiFi if disconnected), `pigpiod`, and the `server.py` server.

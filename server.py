@@ -45,17 +45,17 @@ class hooks:
 
     # Write to the logfile
     timestamp = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-    f = open('/home/pi/stripe.log','a')
+    f = open('/home/pi/gongpi/server.log','a')
     f.write('[' + ip + '] ' + timestamp + ': ' + data + '\n')
     f.close()
 
     try:
-      stripe_json = json.loads(data)
+      server_json = json.loads(data)
     except ValueError, e:
       return '200 OK'
 
     print
-    print '[' + ip + '] ' + stripe_json['type']
+    print '[' + ip + '] ' + server_json['type']
 
     if data_json['type'] in ['charge.succeeded']:
       print
