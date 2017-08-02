@@ -17,22 +17,22 @@ PWM_RANGE=20000  # 1,000,000 / 50 = 20,000us for 100% duty cycle
 pigpio = pigpio.pi()
 
 def init_servo():
-	pigpio.set_PWM_frequency(PIN, PWM_FREQ)
-	pigpio.set_PWM_range(PIN, PWM_RANGE)
+  pigpio.set_PWM_frequency(PIN, PWM_FREQ)
+  pigpio.set_PWM_range(PIN, PWM_RANGE)
   move_servo(CENTER)
   time.sleep(SLEEP)
 
 def move_servo(duty_cycle_us=0):
-	pigpio.set_servo_pulsewidth(PIN, duty_cycle_us)
-	time.sleep(SLEEP)
+  pigpio.set_servo_pulsewidth(PIN, duty_cycle_us)
+  time.sleep(SLEEP)
 
 def spin_servo_cw_from(start, end):
-	for duty_cycle_us in range(start, end+STEP, STEP):
-		move_servo(duty_cycle_us)
+  for duty_cycle_us in range(start, end+STEP, STEP):
+    move_servo(duty_cycle_us)
 
 def spin_servo_ccw_from(start, end):
   for duty_cycle_us in range(start, end-STEP, -STEP):
-  	move_servo(duty_cycle_us)
+    move_servo(duty_cycle_us)
 
 def stop_servo():
   move_servo(CENTER)
@@ -44,3 +44,5 @@ def gong():
   spin_servo_cw_from(LEFT,CENTER)
   stop_servo()
   pigpio.stop()
+
+gong()

@@ -11,6 +11,10 @@
 #
 # By default this script does nothing.
 
+# Start pigpiod
+
+/usr/bin/pigpiod
+
 # Run the webhook listener
 python /home/pi/gongpi/server.py &
 

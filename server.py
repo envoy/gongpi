@@ -23,7 +23,7 @@ def Blink():
     GPIO.output(22,False)
     time.sleep(0.125)
 
-# Blink the LED 5 times – slowly.
+# Slowly blink the LED 5 times.
 def BlinkSlow():
   for i in range(0,5):
     GPIO.output(22,True)
@@ -57,7 +57,7 @@ class hooks:
     print
     print '[' + ip + '] ' + server_json['type']
 
-    if data_json['type'] in ['charge.succeeded']:
+    if server_json['type'] in ['charge.succeeded']:
       print
       print 'dolla dolla bills, yo!'
       print
