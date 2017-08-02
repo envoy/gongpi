@@ -9,26 +9,28 @@ import time
 from threading import Thread
 from time import gmtime, strftime
 
-# Set up LED on GPIO pin 22
+LED_PIN = 22
+
+# Set up LED on GPIO pin LED_PIN
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
-GPIO.setup(22, GPIO.OUT)
-GPIO.output(22,False)
+GPIO.setup(LED_PIN, GPIO.OUT)
+GPIO.output(LED_PIN,False)
 
 # Blink the LED 10 times
 def Blink():
   for i in range(0,20):
-    GPIO.output(22,True)
+    GPIO.output(LED_PIN,True)
     time.sleep(0.125)
-    GPIO.output(22,False)
+    GPIO.output(LED_PIN,False)
     time.sleep(0.125)
 
 # Slowly blink the LED 5 times.
 def BlinkSlow():
   for i in range(0,5):
-    GPIO.output(22,True)
+    GPIO.output(LED_PIN,True)
     time.sleep(1)
-    GPIO.output(22,False)
+    GPIO.output(LED_PIN,False)
     time.sleep(1)
 
 # Blink to indicate the server is listening
