@@ -10,7 +10,6 @@ Rings the gong in the office every time we make a sale.
 * Raspberry Pi
 * Internet connection (wired or wireless)
 * Servo on GPIO pin 4
-* One LED on GPIO pin 22
 
 ## Instructions
 
@@ -35,7 +34,7 @@ Rings the gong in the office every time we make a sale.
   curl -d '{"type":"charge.succeeded"}' [PI's IP ADDRESS]:8080
   ```
 
-  The LED should start blinking, and your servo should activate. `server.py` will print text in the console, and output an access log to `server.log`.
+  Your servo should activate. `server.py` will print text in the console, and output an access log to `server.log`.
 
 9. Restart your Pi `sudo shutdown -r now`
 10. When the Pi reboots, it will automatically start the network monitor (which will auto-reconnect WiFi if disconnected), `pigpiod`, and the `server.py` server.
