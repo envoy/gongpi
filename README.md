@@ -37,4 +37,4 @@ Rings the gong in the office every time we make a sale.
   Your servo should activate. `server.py` will print text in the console, and output an access log to `server.log`.
 
 9. Restart your Pi `sudo shutdown -r now`
-10. When the Pi reboots, it will automatically start the network monitor (which will auto-reconnect WiFi if disconnected), `pigpiod`, and the `server.py` server.
+10. When the Pi reboots, it will automatically start `pigpiod` and `server.py`.
