@@ -30,8 +30,8 @@ class hooks:
       return '200 OK'
 
     if server_json['action'] == 'gong':
-      level = server_json['level'] || 1
-      os.system("python /home/pi/gongpi/gong.py {0}".format(level))
+      intensity = server_json['intensity'] || 1
+      os.system("python /home/pi/gongpi/gong.py --intensity {0}".format(intensity))
     else:
       pass
 
