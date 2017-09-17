@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # 2014 Wells Riley
+# 2017 Justin Ramos
 
+import argparse
 import os
 import web
 import json
@@ -27,8 +29,9 @@ class hooks:
     except ValueError, e:
       return '200 OK'
 
-    if server_json['type'] in ['charge.succeeded']:
-      os.system("python /home/pi/gongpi/gong.py 1")
+    if server_json['action'] == 'gong':
+      level = server_json['level'] || 1
+      os.system("python /home/pi/gongpi/gong.py {0}".format(level))
     else:
       pass
 
