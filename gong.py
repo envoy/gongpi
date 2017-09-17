@@ -8,18 +8,20 @@ import time
 import thread
 
 parser = argparse.ArgumentParser(description='Strike dat gong.')
+parser.add_argument('--pin', help='Servo GPIO pin; default 4', nargs='?',type=int, default=4)
+parser.add_argument('--left', help='PWM left position; default 500', nargs='?',type=int, default=500)
+parser.add_argument('--right', help='PWM right position; default 2500', nargs='?',type=int, default=2500)
 parser.add_argument('--freq', help='PWM frequency in Hz; default 50', nargs='?',type=int, default=50)
 parser.add_argument('--range', help='PWM frequency range; default 20000', nargs='?',type=int, default=20000)
 parser.add_argument('--step', help='PWM step width; default 100', nargs='?',type=int, default=100)
 parser.add_argument('--intensity', metavar='1-11', help='Step multiplier; default 1', nargs='?',type=int, default=1)
+
 args = parser.parse_args()
 
-PIN = 4
-LEFT = 500
-RIGHT = 2500
+PIN = args.pin
+LEFT = args.left
+RIGHT = args.right
 CENTER = LEFT + ((RIGHT - LEFT)/2)
-SLEEP = 0.01
-
 PWM_FREQ = args.freq
 PWM_RANGE = args.range
 PWM_STEP = args.step * args.intensity
@@ -48,14 +50,11 @@ def stop_servo():
 
 def gong():
   spin_servo_ccw_from(CENTER, LEFT)
-  time.sleep(SLEEP)
   spin_servo_cw_from(LEFT, CENTER)
 
 try:
   init_servo()
-  time.sleep(SLEEP)
   gong()
-  time.sleep(SLEEP)
   stop_servo()
 finally:
   pigpio.stop()
