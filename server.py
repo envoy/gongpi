@@ -9,6 +9,8 @@ import json
 import time
 from time import gmtime, strftime
 
+APP_HOME='/home/pi/gongpi'
+
 # Catch the webhook
 urls = ('/.*', 'hooks')
 app = web.application(urls, globals())
@@ -17,7 +19,7 @@ class hooks:
   def logRequest(self, data):
     ip = web.ctx['ip']
     timestamp = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-    f = open('/home/pi/gongpi/server.log','a')
+    f = open('{}/server.log','a'.format(APP_HOME))
     f.write('[' + ip + '] ' + timestamp + ': ' + data + '\n')
     f.close()
 
@@ -30,8 +32,10 @@ class hooks:
       return '200 OK'
 
     if server_json['action'] == 'gong':
-      intensity = server_json['intensity'] || 1
-      os.system("python /home/pi/gongpi/gong.py --intensity {0}".format(intensity))
+      intensity = server_json['intensity'] or 1
+      os.system(
+        'python {0}/gong.py --intensity {1}'.format(APP_HOME, intensity)
+      )
     else:
       pass
 
@@ -41,7 +45,6 @@ if __name__ == '__main__':
   try:
     app.run()
   except KeyboardInterrupt:
-    print
-    print "Exiting..."
-    print
+    print '\nExiting...\n'
     app.stop()
+    exit(0)
