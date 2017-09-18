@@ -4,14 +4,17 @@ Rings the gong in the office every time we make a sale.
 
 ## Requirements
 
+* Raspberry Pi
+* Internet connection (wired or wireless)
+* RC Servo
+
+## Dependencies
+
 * RPi GPIO library
 * PIGPIO library
 * Web.py
-* Raspberry Pi
-* Internet connection (wired or wireless)
-* Servo on GPIO pin 4
 
-## Instructions
+## Getting Started
 
 ```
 sudo su -
@@ -22,14 +25,37 @@ mv etc/rc.local /etc/rc.local
 chmod +x /etc/rc.local
 pip install -r requirements.txt
 /etc/rc.local
+tail -f server.log
 ```
 
-You can test if incoming webhooks are correctly interpreted by running the following from another computer:
+## JSON API
 
 ```
-curl -d '{"action":"gong", "intensity":1}' [PI's IP ADDRESS]:8080
+curl [PI's IP ADDRESS]:8080 -d '{
+  "action":"gong",
+  "intensity":1
+}'
 ```
 
-The servo should activate.
+The servo will activate and strike the gong with the mallet at the specified intensity level.
 
-Reboot the Pi, and the server will start automatically. The access log can be found in `server.log`.
+## Gong Usage
+
+```
+$ python gong.py -h
+usage: gong.py [-h] [--pin [PIN]] [--left [LEFT]] [--right [RIGHT]]
+               [--freq [FREQ]] [--range [RANGE]] [--step [STEP]]
+               [--intensity [1-11]]
+
+Strike dat gong.
+
+optional arguments:
+  -h, --help          show this help message and exit
+  --pin [PIN]         Servo GPIO pin; default 4
+  --left [LEFT]       PWM left position; default 500
+  --right [RIGHT]     PWM right position; default 2500
+  --freq [FREQ]       PWM frequency in Hz; default 50
+  --range [RANGE]     PWM frequency range; default 20000
+  --step [STEP]       PWM step width; default 100
+  --intensity [1-11]  Step multiplier; default 1
+```
