@@ -7,6 +7,7 @@ Rings the gong in the office every time we make a sale.
 * Raspberry Pi
 * Internet connection (wired or wireless)
 * RC servo with Signal on GPIO 4
+* Gong mallet
 
 ## Dependencies
 
