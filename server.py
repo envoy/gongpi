@@ -9,7 +9,8 @@ import json
 import time
 from time import gmtime, strftime
 
-APP_HOME='/home/pi/gongpi'
+APP_HOME = os.environ.get['GONGPI_HOME'] or '/home/pi/gongpi'
+ALLOWED_ARGS = ['pin', 'left', 'right', 'freq', 'range', 'step', 'intensity']
 
 # Catch the webhook
 urls = ('/.*', 'hooks')
@@ -31,10 +32,14 @@ class hooks:
     except ValueError, e:
       return '200 OK'
 
+    cli_args = []
     if server_json['action'] == 'gong':
-      intensity = server_json['intensity'] or 1
+      for arg in ALLOWED_ARGS:
+        if server_json[arg]:
+          cli_args.append('--{} {}'.format(arg, int(server_json[arg])))
+
       os.system(
-        'python {0}/gong.py --intensity {1}'.format(APP_HOME, intensity)
+        'python {0}/gong.py {1}'.format(APP_HOME, cli_args.join(' '))
       )
     else:
       pass
