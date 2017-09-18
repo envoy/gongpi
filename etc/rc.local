@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+# Start pigpiod
+/usr/bin/pigpiod
+
+# Run gongpi server
+python /home/pi/gongpi/server.py &
+
+exit 0
